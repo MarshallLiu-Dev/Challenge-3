@@ -1,7 +1,7 @@
 import express from "express";
 import { App } from "./app/app";
 import cors from "cors";
-require("dotenv").config();
+require("dotenv").config({ path: "./.env" });
 
 const mongoose = require("mongoose");
 
