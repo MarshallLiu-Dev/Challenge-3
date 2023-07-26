@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-const jwt = require('jsonwebtoken');
-
-const Auth = require('../../modules/login');
+import jwt from "jsonwebtoken";
+import Auth from "../Models/auth";
 
 const AuthController = {
     async register(req: Request, res: Response) {
