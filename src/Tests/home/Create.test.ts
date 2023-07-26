@@ -12,7 +12,7 @@ describe('Home - Create', () => {
         });
 
         expect(res1.statusCode).toEqual(201);
-        expect(typeof res1.body).toEqual('object'); // Verifica se é um objeto
+        expect(typeof res1.body).toEqual('object');
     });
 });
 
