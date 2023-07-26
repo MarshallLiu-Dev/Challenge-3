@@ -1,11 +1,8 @@
 import { Request, Response, Router } from "express";
+import { homeController } from "../Controller/HomeControler";
 
 const router: Router = Router();
 
-router.get("/", (req: Request, res: Response) => {
-    res.status(200).json({
-        message: "Api funcionando",
-    });
-});
+router.get("/", homeController.home);
 
 export { router };
