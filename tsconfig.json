@@ -108,7 +108,7 @@
   },
    "include": ["src", "jest.setup.ts"], // Ensure the path is correct
    "exclude": [
-    "./jest.config.ts",
+    "src/jest.config.ts",
     "./node_modules",
     "./build"
   ]
