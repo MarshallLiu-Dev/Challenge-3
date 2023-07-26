@@ -1,22 +1,29 @@
-import express, { Request, Response } from "express";
-import mongoose from "mongoose";
+import express from "express";
+import { App } from "./app/app";
+import cors from "cors";
+require("dotenv").config();
+
+const mongoose = require("mongoose");
+
+async function connectToDatabase() {
+  try {
+    await mongoose.connect(process.env.MONGO_URL, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+    });
+    console.log("Connected to Database");
+  } catch (error) {
+    console.error("Failed to connect to the database:", error);
+  }
+}
+
+connectToDatabase();
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 const PORT = process.env.PORT || 5000;
-const DB_USER = 'admin';
-const DB_PASSWORD = 'admin';
 
-
-app.get("/", (req: Request, res: Response) => {
-  res.status(200).json({
-    message: "Api funcionando",
-  });
+new App().server.listen(PORT, () => {
+  console.log(`Server is running at the URL http://localhost:${PORT}`);
 });
-mongoose
-  .connect(`mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.mpd7oue.mongodb.net/`)
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server is running at the URL http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => console.log(err))
