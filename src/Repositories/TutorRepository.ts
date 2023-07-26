@@ -1,4 +1,4 @@
-const Tutors = require('../models/tutors');
+import Tutors from "../Models/tutors"
 
 export class TutorRepository {
   async createTutor(data: any) {
