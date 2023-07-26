@@ -3,16 +3,16 @@ import { TutorService } from "../Services/TutorService";
 
 export class TutorController {
   private tutorService: TutorService;
-  
+
   constructor() {
     this.tutorService = new TutorService();
   }
-  
+
   async createTutor(req: Request, res: Response) {
     const bodyData = req.body;
     try {
-      const newTutors = await this.tutorService.createTutor(bodyData);
-      return res.status(201).json({ newTutors, message: 'Tutors created successfully' });
+      const newTutor = await this.tutorService.createTutor(bodyData);
+      return res.status(201).json({ newTutor, message: 'Tutor created successfully' });
     } catch (error) {
       return res.status(400).json({ error, message: 'Request error, check and try again' });
     }
@@ -26,10 +26,10 @@ export class TutorController {
       const updatedTutors = await this.tutorService.updateTutor(tutors_id, updatedData);
 
       if (!updatedTutors) {
-        return res.status(404).json({ message: 'Tutors not found' });
+        return res.status(404).json({ message: 'Tutor not found' });
       }
 
-      return res.status(200).json({ updatedTutors, message: 'Tutors updated successfully' });
+      return res.status(200).json({ updatedTutors, message: 'Tutor updated successfully' });
     } catch (error) {
       return res.status(400).json({ error, message: 'Request error, check and try again' });
     }
@@ -37,8 +37,8 @@ export class TutorController {
 
   async getTutors(req: Request, res: Response) {
     try {
-      const tutorss = await this.tutorService.getTutors();
-      return res.status(200).json(tutorss);
+      const tutors = await this.tutorService.getTutors();
+      return res.status(200).json(tutors);
     } catch (error) {
       return res.status(500).json({ error, message: 'Internal server error' });
     }
@@ -48,10 +48,13 @@ export class TutorController {
     const { tutors_id } = req.params;
 
     try {
-      const tutors = await this.tutorService.getTutorById(tutors_id);
-      return res.status(200).json(tutors);
+      const tutor = await this.tutorService.getTutorById(tutors_id);
+      if (!tutor) {
+        return res.status(404).json({ message: 'Tutor not found' });
+      }
+      return res.status(200).json(tutor);
     } catch (error) {
-      return res.status(400).json({ error, message: 'Request error check and try again' });
+      return res.status(400).json({ error, message: 'Request error, check and try again' });
     }
   }
 
@@ -59,10 +62,13 @@ export class TutorController {
     const { tutors_id } = req.params;
 
     try {
-      await this.tutorService.deleteTutor(tutors_id);
-      return res.status(204).json({ message: 'Delete successful' });
+      const deletedTutor = await this.tutorService.deleteTutor(tutors_id);
+      if (!deletedTutor) {
+        return res.status(404).json({ message: 'Tutor not found' });
+      }
+      return res.status(204).json({ message: 'Tutor deleted successfully' });
     } catch (error) {
-      return res.status(400).json({ error, message: 'Request error check and try again' });
+      return res.status(400).json({ error, message: 'Request error, check and try again' });
     }
   }
 }
