@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import jwt, { Secret } from "jsonwebtoken";
 import Auth from "../Models/auth";
 
 const AuthController = {
@@ -16,7 +16,7 @@ const AuthController = {
         if (password !== confirmpassword) {
             return res.status(422).json({ message: 'Passwords do not match!' });
         }
-        // Verificando se o usuario existe
+        // Verificando se o usuário existe
         const userExists = await Auth.findOne({ email: email });
         if (userExists) {
             return res.status(422).json({ message: 'User already registered' });
@@ -25,7 +25,7 @@ const AuthController = {
         const salt = await bcrypt.genSalt(12);
         const passwordHash = await bcrypt.hash(password, salt);
 
-        // Criando o Usuario
+        // Criando o Usuário
         const user = new Auth({
             email,
             password: passwordHash,
@@ -57,21 +57,22 @@ const AuthController = {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        //Varificando se a senhas são iguais
+        // Verificando se as senhas são iguais
         const checkPassword = await bcrypt.compare(password, user.password);
         if (!checkPassword) {
             return res.status(422).json({ message: 'Invalid password' });
         }
 
         try {
-            const secret = process.env.SECRET;
+            const secret: Secret = process.env.SECRET || "defaultSecret";
 
             const token = jwt.sign(
                 {
                     id: user._id,
                 },
-                secret,
+                secret
             );
+
             res
                 .status(200)
                 .json({ message: 'Authentication performed successfully', token });
@@ -84,4 +85,4 @@ const AuthController = {
     },
 };
 
-module.exports = AuthController;
+export default AuthController;
