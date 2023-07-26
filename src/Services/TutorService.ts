@@ -1,5 +1,5 @@
-const Tutors = require('../models/tutors');
-const Pets = require('../models/pets');
+import Tutors from "../Models/tutors"
+import Pets from "../Models/pets"
 
 export class TutorService {
   async createTutor(data: any) {

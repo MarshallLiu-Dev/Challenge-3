@@ -28,4 +28,4 @@ const Schema = new mongoose.Schema({
     ],
 });
 
-module.exports = mongoose.model('tutors', Schema);
+export = mongoose.model('tutors', Schema);
