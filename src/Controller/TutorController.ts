@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { TutorService } from "../Services/TutorService";
+import { TutorService } from '../Services/TutorService';
 
 export class TutorController {
   private tutorService: TutorService;
@@ -18,18 +18,18 @@ export class TutorController {
     }
   }
 
-  async updateTutors(req: Request, res: Response) {
-    const { tutors_id } = req.params;
+  async updateTutor(req: Request, res: Response) {
+    const { id } = req.params; // Certifique-se de usar 'id' aqui
     const updatedData = req.body;
 
     try {
-      const updatedTutors = await this.tutorService.updateTutor(tutors_id, updatedData);
+      const updatedTutor = await this.tutorService.updateTutor(id, updatedData);
 
-      if (!updatedTutors) {
+      if (!updatedTutor) {
         return res.status(404).json({ message: 'Tutor not found' });
       }
 
-      return res.status(200).json({ updatedTutors, message: 'Tutor updated successfully' });
+      return res.status(200).json({ updatedTutor, message: 'Tutor updated successfully' });
     } catch (error) {
       return res.status(400).json({ error, message: 'Request error, check and try again' });
     }
@@ -45,27 +45,31 @@ export class TutorController {
   }
 
   async getTutorById(req: Request, res: Response) {
-    const { tutors_id } = req.params;
+    const { id } = req.params; // Certifique-se de usar 'id' aqui
 
     try {
-      const tutor = await this.tutorService.getTutorById(tutors_id);
+      const tutor = await this.tutorService.getTutorById(id);
+
       if (!tutor) {
         return res.status(404).json({ message: 'Tutor not found' });
       }
+
       return res.status(200).json(tutor);
     } catch (error) {
       return res.status(400).json({ error, message: 'Request error, check and try again' });
     }
   }
 
-  async deleteTutors(req: Request, res: Response) {
-    const { tutors_id } = req.params;
+  async deleteTutor(req: Request, res: Response) {
+    const { id } = req.params; // Certifique-se de usar 'id' aqui
 
     try {
-      const deletedTutor = await this.tutorService.deleteTutor(tutors_id);
+      const deletedTutor = await this.tutorService.deleteTutor(id);
+
       if (!deletedTutor) {
         return res.status(404).json({ message: 'Tutor not found' });
       }
+
       return res.status(204).json({ message: 'Tutor deleted successfully' });
     } catch (error) {
       return res.status(400).json({ error, message: 'Request error, check and try again' });

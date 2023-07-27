@@ -1,4 +1,4 @@
-import Tutors from "../Models/tutors"
+import Tutors from "../Models/tutors";
 
 export class TutorRepository {
   async createTutor(data: any) {
@@ -9,9 +9,9 @@ export class TutorRepository {
     }
   }
 
-  async updateTutor(tutors_id: string, updatedData: any) {
+  async updateTutor(id: string, updatedData: any) {
     try {
-      return await Tutors.findByIdAndUpdate(tutors_id, updatedData, { new: true });
+      return await Tutors.findByIdAndUpdate(id, updatedData);
     } catch (error) {
       throw error;
     }
@@ -25,9 +25,9 @@ export class TutorRepository {
     }
   }
 
-  async findTutorById(tutors_id: string) {
+  async findTutorById(id: string) {
     try {
-      return await Tutors.findById(tutors_id);
+      return await Tutors.findById(id);
     } catch (error) {
       throw error;
     }
