@@ -20,7 +20,7 @@ const Schema = new mongoose.Schema({
         type: String,
         require: true,
     },
-    user: {
+    tutor: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'tutors',
     },

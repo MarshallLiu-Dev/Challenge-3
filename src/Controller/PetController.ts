@@ -1,18 +1,32 @@
 // Importações necessárias do Express e do Service relacionado ao Pet
 import { Request, Response } from 'express';
 import { PetService } from '../Services/petService';
+import { TutorService } from '../Services/TutorService';
 
 // Controller do Pet, responsável por lidar com as requisições relacionadas aos Petes
 export class PetController {
     private petService: PetService;
+    private tutorService: TutorService;
     // Construtor da classe, onde é criada a instância do petService
     constructor() {
         this.petService = new PetService();
+        this.tutorService = new TutorService();
     }
 
     // Método para criar um novo Pet
     async createPet(req: Request, res: Response) {
+        const { tutorId } = req.params;
         const bodyData = req.body;
+
+        const tutor = await this.tutorService.getTutorById(tutorId);
+        if (!tutor) {
+            return res.status(404).json({
+              error: true,
+              code: 404,
+              message: `No tutor with id ${tutorId}`,
+            });
+          }
+        
         try {
             // Chama o método createPet do petService para criar um novo Pet
             const newPet = await this.petService.createPet(bodyData);
@@ -26,12 +40,29 @@ export class PetController {
 
     // Método para atualizar um Pet existente
     async updatePet(req: Request, res: Response) {
-        const { id } = req.params; // Obtém o ID do Pet a ser atualizado dos parâmetros da URL
+        const {petId, tutorId } = req.params; // Obtém o ID do Pet a ser atualizado dos parâmetros da URL
         const updatedData = req.body; // Obtém os dados atualizados do corpo da requisição
+
+        const tutor = await this.tutorService.getTutorById(tutorId);
+        if (!tutor) {
+            return res.status(404).json({
+              error: true,
+              code: 404,
+              message: `No tutor with id ${tutorId}`,
+            });
+          }
+
+          const pets = await this.petService.getPetById(petId);
+          
+          if (!pets) {
+            return res
+              .status(404)
+              .json({ error: true, code: 404, message: `No pet with id ${petId}` });
+          }
 
         try {
             // Chama o método updatePet do PetService para atualizar o Pet com o ID fornecido
-            const updatedPet = await this.petService.updatePet(id, updatedData);
+            const updatedPet = await this.petService.updatePet(petId, updatedData);
 
             if (!updatedPet) {
                 // Caso o Pet não seja encontrado, retorna uma resposta com uma mensagem de erro
@@ -39,7 +70,7 @@ export class PetController {
             }
 
             // Retorna a resposta com o Pet atualizado e uma mensagem de sucesso
-            return res.status(200).json({ updatedPet, message: 'Pet updated successfully' });
+            return res.status(200).json({ updatedData, message: 'Pet updated successfully' });
         } catch (error) {
             // Em caso de erro, retorna uma resposta com o erro e uma mensagem de falha
             return res.status(400).json({ error, message: 'Request error, check and try again' });
@@ -61,11 +92,11 @@ export class PetController {
 
     // Método para obter um Pet específico pelo ID
     async getPetById(req: Request, res: Response) {
-        const { id } = req.params; // Obtém o ID do Pet a ser buscado dos parâmetros da URL
+        const { petId } = req.params; // Obtém o ID do Pet a ser buscado dos parâmetros da URL
 
         try {
             // Chama o método getPetById do PetService para obter o Pet pelo ID fornecido
-            const pet = await this.petService.getPetById(id);
+            const pet = await this.petService.getPetById(petId);
 
             if (!pet) {
                 // Caso o Pet não seja encontrado, retorna uma resposta com uma mensagem de erro
@@ -82,11 +113,29 @@ export class PetController {
 
     // Método para deletar um Pet pelo ID
     async deletePet(req: Request, res: Response) {
-        const { id } = req.params; // Obtém o ID do Pet a ser deletado dos parâmetros da URL
+        const {petId, tutorId } = req.params; // Obtém o ID do Pet a ser atualizado dos parâmetros da URL
 
+        const tutor = await this.tutorService.getTutorById(tutorId);
+        if (!tutor) {
+            return res.status(404).json({
+              error: true,
+              code: 404,
+              message: `No tutor with id ${tutorId}`,
+            });
+          }
+
+          const pets = await this.petService.getPetById(petId);
+          
+          if (!pets) {
+            return res
+              .status(404)
+              .json({ error: true, code: 404, message: `No pet with id ${petId}` });
+          }
+
+          
         try {
             // Chama o método deletePet do PetService para deletar o Pet com o ID fornecido
-            const deletedPet = await this.petService.deletePet(id);
+            const deletedPet = await this.petService.deletePet(petId);
 
             if (!deletedPet) {
                 // Caso o Pet não seja encontrado, retorna uma resposta com uma mensagem de erro

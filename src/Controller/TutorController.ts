@@ -28,12 +28,12 @@ export class TutorController {
 
   // Método para atualizar um Tutor existente
   async updateTutor(req: Request, res: Response) {
-    const { id } = req.params; // Obtém o ID do Tutor a ser atualizado dos parâmetros da URL
+    const { tutorId } = req.params; // Obtém o ID do Tutor a ser atualizado dos parâmetros da URL
     const updatedData = req.body; // Obtém os dados atualizados do corpo da requisição
 
     try {
       // Chama o método updateTutor do TutorService para atualizar o Tutor com o ID fornecido
-      const updatedTutor = await this.tutorService.updateTutor(id, updatedData);
+      const updatedTutor = await this.tutorService.updateTutor(tutorId, updatedData);
 
       if (!updatedTutor) {
         // Caso o Tutor não seja encontrado, retorna uma resposta com uma mensagem de erro
@@ -41,51 +41,32 @@ export class TutorController {
       }
 
       // Retorna a resposta com o Tutor atualizado e uma mensagem de sucesso
-      return res.status(200).json({ updatedTutor, message: 'Tutor updated successfully' });
+      return res.status(200).json({ updatedData, message: 'Tutor updated successfully' });
     } catch (error) {
       // Em caso de erro, retorna uma resposta com o erro e uma mensagem de falha
       return res.status(400).json({ error, message: 'Request error, check and try again' });
     }
   }
 
-  // Método para obter todos os Tutores cadastrados
-  // async getTutors(req: Request, res: Response) {
-  //   try {
-  //     // Chama o método getTutors do TutorService para obter todos os Tutores cadastrados
-  //     const tutors = await this.tutorService.getTutors();
-  //     // Retorna a resposta com a lista de Tutores e um status de sucesso
-  //     return res.status(200).json(tutors);
-  //   } catch (error) {
-  //     // Em caso de erro, retorna uma resposta com o erro e uma mensagem de falha
-  //     return res.status(500).json({ error, message: 'Internal server error' });
-  //   }
-  // }
 
   // Método para obter todos os Tutores cadastrados
-//   async getTutors(req: Request, res: Response) {
-//   try {
-//     const tutorWithPets = await TutorService.getTutorWithPets();
-//     return res.status(200).json({ tutorWithPets, message: 'Listing All Tutotes and Pets' });
-//   } catch (error) {
-//     return res.status(500).json({ error, message: `Internal server error ${error}` });
-//   }
-// }
   async getTutors(req: Request, res: Response) {
     try {
-      const tutorWithPets = await TutorService.getTutorWithPets();
+      const tutorWithPets = await this.tutorService.getTutorWithPets();
       return res.status(200).json({ tutorWithPets, message: 'Listing All Tutors and Pets' });
     } catch (error) {
       return res.status(500).json({ error, message: `Internal server error ${error}` });
     }
   }
+  
 
   // Método para obter um Tutor específico pelo ID
   async getTutorById(req: Request, res: Response) {
-    const { id } = req.params; // Obtém o ID do Tutor a ser buscado dos parâmetros da URL
+    const { tutorId } = req.params; // Obtém o ID do Tutor a ser buscado dos parâmetros da URL
 
     try {
       // Chama o método getTutorById do TutorService para obter o Tutor pelo ID fornecido
-      const tutor = await this.tutorService.getTutorById(id);
+      const tutor = await this.tutorService.getTutorById(tutorId);
 
       if (!tutor) {
         // Caso o Tutor não seja encontrado, retorna uma resposta com uma mensagem de erro
@@ -102,11 +83,11 @@ export class TutorController {
 
   // Método para deletar um Tutor pelo ID
   async deleteTutor(req: Request, res: Response) {
-    const { id } = req.params; // Obtém o ID do Tutor a ser deletado dos parâmetros da URL
+    const { tutorId } = req.params; // Obtém o ID do Tutor a ser deletado dos parâmetros da URL
 
     try {
       // Chama o método deleteTutor do TutorService para deletar o Tutor com o ID fornecido
-      const deletedTutor = await this.tutorService.deleteTutor(id);
+      const deletedTutor = await this.tutorService.deleteTutor(tutorId);
 
       if (!deletedTutor) {
         // Caso o Tutor não seja encontrado, retorna uma resposta com uma mensagem de erro

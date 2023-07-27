@@ -20,10 +20,10 @@ export class PetService {
     }
 
     // Método para atualizar um Tutor existente
-    async updatePet(id: string, updatedData: any) {
+    async updatePet(petId: string, updatedData: any) {
         try {
             // Chama o método updateTutor do TutorRepository para atualizar o Tutor com o ID fornecido
-            return await this.petRepository.updatePet(id, updatedData);
+            return await this.petRepository.updatePet(petId, updatedData);
         } catch (error) {
             // Em caso de erro, lança o erro para ser tratado posteriormente
             throw error;

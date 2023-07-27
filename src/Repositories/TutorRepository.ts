@@ -13,10 +13,10 @@ export class TutorRepository {
   }
 
   // Método para atualizar um Tutor existente no banco de dados
-  async updateTutor(id: string, updatedData: any) {
+  async updateTutor(tutorId: string, updatedData: any) {
     try {
       // Chama o método findByIdAndUpdate do modelo Tutors para atualizar o Tutor com o ID fornecido
-      return await Tutors.findByIdAndUpdate(id, updatedData);
+      return await Tutors.findByIdAndUpdate(tutorId, updatedData);
     } catch (error) {
       // Em caso de erro, lança o erro para ser tratado posteriormente
       throw error;
@@ -35,10 +35,10 @@ export class TutorRepository {
   }
 
   // Método para obter um Tutor específico pelo ID no banco de dados
-  async findTutorById(id: string) {
+  async findTutorById(tutorId: string) {
     try {
       // Chama o método findById do modelo Tutors para obter o Tutor pelo ID fornecido
-      return await Tutors.findById(id);
+      return await Tutors.findById(tutorId);
     } catch (error) {
       // Em caso de erro, lança o erro para ser tratado posteriormente
       throw error;
@@ -46,10 +46,10 @@ export class TutorRepository {
   }
 
   // Método para deletar um Tutor pelo ID no banco de dados
-  async deleteTutor(tutors_id: string) {
+  async deleteTutor(tutorId: string) {
     try {
       // Chama o método findByIdAndDelete do modelo Tutors para deletar o Tutor com o ID fornecido
-      return await Tutors.findByIdAndDelete(tutors_id);
+      return await Tutors.findByIdAndDelete(tutorId);
     } catch (error) {
       // Em caso de erro, lança o erro para ser tratado posteriormente
       throw error;

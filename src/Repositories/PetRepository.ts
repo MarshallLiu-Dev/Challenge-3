@@ -13,10 +13,10 @@ export class PetRepository {
     }
 
     // Método para atualizar um Tutor existente no banco de dados
-    async updatePet(id: string, updatedData: any) {
+    async updatePet(petId: string, updatedData: any) {
         try {
             // Chama o método findByIdAndUpdate do modelo Tutors para atualizar o Tutor com o ID fornecido
-            return await Pet.findByIdAndUpdate(id, updatedData);
+            return await Pet.findByIdAndUpdate(petId, updatedData);
         } catch (error) {
             // Em caso de erro, lança o erro para ser tratado posteriormente
             throw error;
