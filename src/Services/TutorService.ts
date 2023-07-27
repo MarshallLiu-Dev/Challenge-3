@@ -162,16 +162,15 @@ export class TutorService {
 
     for (const tutor of tutors) {
       const pets = await Pet.find({ tutors: tutor._id });
-
       const formattedPets = pets.map(
-        (pet: {
+        (pet: Partial<{
           _id: any;
           name: any;
           species: any;
           carry: any;
           weight: any;
           date_of_birth: any;
-        }) => ({
+        }>) => ({
           id: pet._id,
           name: pet.name,
           species: pet.species,
