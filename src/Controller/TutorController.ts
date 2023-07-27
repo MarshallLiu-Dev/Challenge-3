@@ -49,17 +49,27 @@ export class TutorController {
   }
 
   // Método para obter todos os Tutores cadastrados
+  // async getTutors(req: Request, res: Response) {
+  //   try {
+  //     // Chama o método getTutors do TutorService para obter todos os Tutores cadastrados
+  //     const tutors = await this.tutorService.getTutors();
+  //     // Retorna a resposta com a lista de Tutores e um status de sucesso
+  //     return res.status(200).json(tutors);
+  //   } catch (error) {
+  //     // Em caso de erro, retorna uma resposta com o erro e uma mensagem de falha
+  //     return res.status(500).json({ error, message: 'Internal server error' });
+  //   }
+  // }
+
+
   async getTutors(req: Request, res: Response) {
-    try {
-      // Chama o método getTutors do TutorService para obter todos os Tutores cadastrados
-      const tutors = await this.tutorService.getTutors();
-      // Retorna a resposta com a lista de Tutores e um status de sucesso
-      return res.status(200).json(tutors);
-    } catch (error) {
-      // Em caso de erro, retorna uma resposta com o erro e uma mensagem de falha
-      return res.status(500).json({ error, message: 'Internal server error' });
-    }
+  try {
+    const tutorWithPets = await TutorService.getTutorWithPets();
+    return res.status(200).json(tutorWithPets);
+  } catch (error) {
+    return res.status(500).json({ error, message: 'Internal server error' });
   }
+}
 
   // Método para obter um Tutor específico pelo ID
   async getTutorById(req: Request, res: Response) {

@@ -5,6 +5,7 @@ import { PetController } from "../Controller/PetController";
 
 const tutorController = new TutorController();
 const router: Router = Router();
+const petController = new PetController();
 
 //Rotas para o tutor
 router.get("/", homeController.home);
@@ -15,7 +16,11 @@ router.delete('/tutors/:id', tutorController.deleteTutor.bind(tutorController));
 router.put('/tutors/:id', tutorController.updateTutor.bind(tutorController));
 
 //Rotas para o pet
-router.post("/pet/:tutorId", PetController.createPet)
+router.post("/pet/:tutorId", petController.createPet.bind(petController));
+router.put("/pet/:id", petController.updatePet.bind(petController));
+router.get("/pets", petController.getPet.bind(petController));
+router.get("/pet/:id", petController.getPetById.bind(petController));
+router.delete("/pet/:id", petController.deletePet.bind(petController));
 
 
 
