@@ -14,7 +14,7 @@ export class TutorService {
     try {
       // Utilize o método find do modelo Tutor para obter todos os tutores cadastrados
       // e use o método populate para carregar os detalhes dos pets associados
-      return await Tutor.find().populate('pets').exec();
+      return await this.tutorRepository.findAllTutors();
     } catch (error) {
       // Em caso de erro, lança o erro para ser tratado posteriormente
       throw error;
@@ -43,17 +43,8 @@ export class TutorService {
     }
   }
 
-  // Método para obter um Tutor específico pelo ID sem o Populate
-  // async getTutorById(tutorId: string) {
-  //   try {
-  //     // Chama o método findTutorById do TutorRepository para obter o Tutor pelo ID fornecido
-  //     return await this.tutorRepository.findTutorById(tutorId);
-  //   } catch (error) {
-  //     // Em caso de erro, lança o erro para ser tratado posteriormente
-  //     throw error;
-  //   }
-  // }
 
+  
   // Método para obter um Tutor específico pelo ID com o Populate
 
   async getTutorById(tutorId: string) {

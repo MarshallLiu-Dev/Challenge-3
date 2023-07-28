@@ -36,8 +36,17 @@ const tutorSchema = new mongoose.Schema({
     ],
 });
 
+tutorSchema.pre("save", async function () {
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  });
+  
+  tutorSchema.methods.comparePassword = async function (canditatePassword: any) {
+    const isMatch = await bcrypt.compare(canditatePassword, this.password);
+    return isMatch;
+  };
 
-// Método personalizado para ocultar a senha no retorno do JSON
+  // Método personalizado para ocultar a senha no retorno do JSON
 tutorSchema.methods.toJSON = function () {
     const tutorObject = this.toObject();
     // Substitua o valor do campo "password" por asteriscos antes de enviar a resposta
