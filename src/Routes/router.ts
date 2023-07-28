@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import { homeController } from "../Controller/HomeControler";
 import { TutorController } from '../Controller/TutorController';
 import { PetController } from "../Controller/PetController";
+import AuthController from './../Controller/Auth';
 
 const tutorController = new TutorController();
 const router: Router = Router();
@@ -10,7 +11,7 @@ const petController = new PetController();
 //Rotas para o tutor
 router.get("/", homeController.home);
 // Rota para autenticação
-router.post('/login', tutorController.authenticateTutor);
+router.post('/login', AuthController.Login );
 
 router.post('/tutor', tutorController.createTutor.bind(tutorController));
 router.get('/tutors', tutorController.getTutors.bind(tutorController));

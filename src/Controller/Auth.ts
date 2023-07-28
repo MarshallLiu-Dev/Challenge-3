@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt, { Secret } from "jsonwebtoken";
-import Auth from "../Models/auth";
+import Tutor from "../Models/tutors"
 
 const AuthController = {
     async register(req: Request, res: Response) {
@@ -17,7 +17,7 @@ const AuthController = {
             return res.status(422).json({ message: 'Passwords do not match!' });
         }
         // Verificando se o usuário existe
-        const userExists = await Auth.findOne({ email: email });
+        const userExists = await Tutor.findOne({ email: email });
         if (userExists) {
             return res.status(422).json({ message: 'User already registered' });
         }
@@ -26,7 +26,7 @@ const AuthController = {
         const passwordHash = await bcrypt.hash(password, salt);
 
         // Criando o Usuário
-        const user = new Auth({
+        const user = new Tutor({
             email,
             password: passwordHash,
         });
@@ -52,7 +52,7 @@ const AuthController = {
         if (!password) {
             return res.status(422).json({ message: 'Password is required!' });
         }
-        const user = await Auth.findOne({ email: email });
+        const user = await Tutor.findOne({ email: email });
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
