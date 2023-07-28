@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
-const Schema = new mongoose.Schema({
+import bcrypt from 'bcrypt';
+
+const tutorSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -11,6 +13,12 @@ const Schema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
+        match: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+    },
+    password: {
+        type: String,
+        required: true,
+        minlength: 8,
     },
     zip_code: {
         type: Number,
@@ -28,4 +36,13 @@ const Schema = new mongoose.Schema({
     ],
 });
 
-export = mongoose.model('tutors', Schema);
+
+// Método personalizado para ocultar a senha no retorno do JSON
+tutorSchema.methods.toJSON = function () {
+    const tutorObject = this.toObject();
+    // Substitua o valor do campo "password" por asteriscos antes de enviar a resposta
+    tutorObject.password = '******';
+    return tutorObject;
+};
+
+export = mongoose.model('tutors', tutorSchema);

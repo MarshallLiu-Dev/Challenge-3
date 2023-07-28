@@ -1,6 +1,9 @@
 // Importações necessárias do Express e do Service relacionado ao Tutor
 import { Request, Response } from 'express';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import { TutorService } from '../Services/TutorService';
+import Tutor from '../Models/tutors';
 
 // Controller do Tutor, responsável por lidar com as requisições relacionadas aos Tutores
 export class TutorController {
@@ -10,6 +13,39 @@ export class TutorController {
   // Construtor da classe, onde é criada a instância do TutorService
   constructor() {
     this.tutorService = new TutorService();
+  }
+
+  async authenticateTutor(req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    try {
+      // Busca o tutor pelo email no banco de dados
+      const tutor = await Tutor.findOne({ email });
+
+      if (!tutor) {
+        // Caso o tutor não seja encontrado, retorna uma resposta com uma mensagem de erro
+        return res.status(404).json({ message: 'Tutor not found' });
+      }
+
+      // Verifica se a senha fornecida corresponde à senha criptografada no banco de dados
+      const isPasswordValid = await bcrypt.compare(password, tutor.password);
+
+      if (!isPasswordValid) {
+        // Caso a senha seja inválida, retorna uma resposta com uma mensagem de erro
+        return res.status(401).json({ message: 'Invalid password' });
+      }
+
+      // Se a autenticação for bem-sucedida, você pode gerar um token de acesso
+      const accessToken = jwt.sign({ _id: tutor._id }, 'suaChaveSecreta', {
+        expiresIn: '1h', // Defina o tempo de expiração do token, por exemplo, 1 hora
+      });
+
+      // Retorna o token de acesso na resposta
+      return res.status(200).json({ access_token: accessToken });
+    } catch (error) {
+      // Em caso de erro, retorna uma resposta com o erro e uma mensagem de falha
+      return res.status(500).json({ error, message: 'Internal server error' });
+    }
   }
 
   // Método para criar um novo Tutor
@@ -48,19 +84,21 @@ export class TutorController {
     }
   }
 
-
   // Método para obter todos os Tutores cadastrados
   async getTutors(req: Request, res: Response) {
     try {
-      const tutorWithPets = await this.tutorService.getTutorWithPets();
-      return res.status(200).json({ tutorWithPets, message: 'Listing All Tutors and Pets' });
+      // Chama o método do serviço para obter todos os tutores com seus pets associados
+      const tutorsWithPets = await this.tutorService.getTutors();
+
+      // Retorna a resposta com a lista de tutores e seus pets associados
+      return res.status(200).json({ tutorsWithPets, message: 'Listing All Tutors and Pets' });
     } catch (error) {
-      return res.status(500).json({ error, message: `Internal server error ${error}` });
+      // Em caso de erro, retorna uma resposta com o erro e uma mensagem de falha
+      return res.status(500).json({ error, message: 'Internal server error' });
     }
   }
-  
 
-  // Método para obter um Tutor específico pelo ID
+  // Método para obter um Tutor específico pelo ID (não é um endpoint HTTP)
   async getTutorById(req: Request, res: Response) {
     const { tutorId } = req.params; // Obtém o ID do Tutor a ser buscado dos parâmetros da URL
 
@@ -81,24 +119,26 @@ export class TutorController {
     }
   }
 
-  // Método para deletar um Tutor pelo ID
+
+  // // Método para deletar um Tutor pelo ID
+
   async deleteTutor(req: Request, res: Response) {
-    const { tutorId } = req.params; // Obtém o ID do Tutor a ser deletado dos parâmetros da URL
+    const { tutorId } = req.params;
 
     try {
-      // Chama o método deleteTutor do TutorService para deletar o Tutor com o ID fornecido
       const deletedTutor = await this.tutorService.deleteTutor(tutorId);
 
       if (!deletedTutor) {
-        // Caso o Tutor não seja encontrado, retorna uma resposta com uma mensagem de erro
         return res.status(404).json({ message: 'Tutor not found' });
       }
 
-      // Retorna a resposta com um status de sucesso, já que o Tutor foi deletado com sucesso
       return res.status(204).json({ message: 'Tutor deleted successfully' });
-    } catch (error) {
-      // Em caso de erro, retorna uma resposta com o erro e uma mensagem de falha
-      return res.status(400).json({ error, message: 'Request error, check and try again' });
+    } catch (error: any) {
+      if (error.message === 'Tutor has pets associated') {
+        return res.status(403).json({ message: 'Tutor has pets associated and cannot be deleted' });
+      }
+
+      return res.status(400).json({ message: 'Request error, check and try again, Tutor has pets associated and cannot be deleted' });
     }
   }
 }

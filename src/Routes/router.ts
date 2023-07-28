@@ -9,6 +9,9 @@ const petController = new PetController();
 
 //Rotas para o tutor
 router.get("/", homeController.home);
+// Rota para autenticação
+router.post('/login', tutorController.authenticateTutor);
+
 router.post('/tutor', tutorController.createTutor.bind(tutorController));
 router.get('/tutors', tutorController.getTutors.bind(tutorController));
 router.get('/tutor/:tutorId', tutorController.getTutorById.bind(tutorController));
