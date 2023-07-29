@@ -11,7 +11,7 @@ const AuthMiddleware = async (req:express.Request, res: express.Response, next:e
         
         // Verifica se o cabeçalho de autorização está presente na requisição
         if (!authorizationHeader) {
-            return res.status(401).json({ error: true, code: 401, message: "Autenticação inválida, não autorizado" });
+            return res.status(401).json({ error: true, code: 401, message: "Authentication invalid, unauthorized" });
         }
 
         // Divide o cabeçalho de autorização para extrair o token JWT
@@ -19,7 +19,7 @@ const AuthMiddleware = async (req:express.Request, res: express.Response, next:e
 
         // Verifica se o formato do token é válido (esperado: "Bearer <token>")
         if (token.length !== 2 || token[0] !== "Bearer") {
-            return res.status(401).json({ error: true, code: 401, message: "Formato inválido do token" });
+            return res.status(401).json({ error: true, code: 401, message: "Invalid token format" });
         }
 
         // Obtém a chave secreta da variável de ambiente
@@ -30,7 +30,7 @@ const AuthMiddleware = async (req:express.Request, res: express.Response, next:e
     
         // Verifica se ocorreu um erro na decodificação do token
         if (typeof decoded === 'string') {
-            return res.status(401).json({ error: true, code: 401, message: "Decodificado é uma string" });
+            return res.status(401).json({ error: true, code: 401, message: "Decoded is a string" });
         }
 
         // Busca o tutor no banco de dados usando o ID obtido do token decodificado
@@ -38,7 +38,7 @@ const AuthMiddleware = async (req:express.Request, res: express.Response, next:e
 
         // Verifica se o tutor foi encontrado no banco de dados
         if (!tutor) {
-            return res.status(404).json({ error: true, code: 404, message: "Tutor não encontrado" });
+            return res.status(404).json({ error: true, code: 404, message: "Tutor not found" });
         }
 
         // Armazena o ID do tutor na requisição para uso em rotas subsequentes
@@ -49,7 +49,8 @@ const AuthMiddleware = async (req:express.Request, res: express.Response, next:e
         next();
     } catch (error) {
         // Em caso de erro, registra o erro no console e retorna um erro de autenticação
-        return res.status(401).json({ error: true, code: 401, message: "Não autorizado" });
+        return res.status(401).json({
+            error: true, code: 401, message: "Not authorized" });
     }
 };
 

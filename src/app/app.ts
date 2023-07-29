@@ -17,4 +17,8 @@ export class App {
     private router() {
         this.server.use(router);
     }
+
+    public listen(port: number, callback: () => void): void {
+        this.server.listen(port, callback);
+    }
 }
