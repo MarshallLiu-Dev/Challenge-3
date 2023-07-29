@@ -1,0 +1,25 @@
+{
+  "openapi": "3.0.0",
+  "info":{
+    "title": "Challenge 3",
+    "version":"1.0",
+    "description": ""
+  },
+  "tags":[
+    {
+      "name": "Login",
+      "description": ""
+    },{
+      "name": "Tutor",
+      "description": ""
+    },{
+      "name": "Pet",
+      "description": ""
+    }
+  ],
+  "paths": {},
+  "components": {
+    "schemas":{},
+    "securitySchemas":{}
+  }
+}
