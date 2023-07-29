@@ -9,6 +9,7 @@ import Tutor from '../Models/tutors';
 export class TutorController {
   // Instância do Service relacionado ao Tutor
   private tutorService: TutorService;
+    static getTutors: any;  //  Teste
 
   // Construtor da classe, onde é criada a instância do TutorService
   constructor() {
@@ -119,9 +120,7 @@ export class TutorController {
     }
   }
 
-
-  // // Método para deletar um Tutor pelo ID
-
+  // Método para deletar um Tutor pelo ID
   async deleteTutor(req: Request, res: Response) {
     const { tutorId } = req.params;
 
