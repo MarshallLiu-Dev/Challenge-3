@@ -10,7 +10,7 @@
     "build": "tsc --project ./",
     "start:dev": "nodemon src/server.ts",
     "start:prod": "node dist/server.js",
-    "test": "jest"
+    "test": "jest --runInBand --no-cache --detectOpenHandles"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
