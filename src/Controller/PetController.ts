@@ -7,6 +7,7 @@ import Tutors from '../Models/tutors';
 export class PetController {
     private petService: PetService;
     private tutorService: TutorService;
+    static getPet: any; // Teste
     // Construtor da classe, onde é criada a instância do petService
     constructor() {
         this.petService = new PetService();
