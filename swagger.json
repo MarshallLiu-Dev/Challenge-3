@@ -21,7 +21,7 @@
     "/login": {
       "post": {
         "tags": ["Login"],
-        "sumary": "authenticate the user.",
+        "summary": "Authenticate the user.",
         "requestBody": {
           "description": "Tutor credentials",
           "requery": true,
@@ -55,7 +55,7 @@
     "/tutor": {
       "post": {
         "tags": ["Tutor"],
-        "sumary": "Create a new tutor",
+        "summary": "Create a new tutor",
         "requestBody": {
           "description": "Data for a new tutor",
           "required": true,
@@ -102,6 +102,119 @@
           },
           "500": {
             "description": "Server error"
+          }
+        }
+      }
+    },
+    "/tutor/{id}": {
+      "get":{
+        "tags": ["Tutor"],
+        "summary": "Get specific tutor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security":[
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tutor data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tutor"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Tutor"],
+        "summary": "Updates a tutor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "New data for the tutor",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tutor"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tutor updated successfully"
+          },
+          "400": {
+            "description": "Request error"
+          },
+          "404": {
+            "description": "Tutor not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Tutor"],
+        "summary": "Deletes a tutor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Tutor deleted successfully"
+          },
+          "400": {
+            "description": "Request error"
+          },
+          "403": {
+            "description": "Tutor has pets associated"
+          },
+          "404": {
+            "description": "Tutor not found"
           }
         }
       }
