@@ -21,9 +21,9 @@
     "/login": {
       "post": {
         "tags": ["Login"],
-        "sumary": "Authenticate the given tutor.",
+        "sumary": "authenticate the user.",
         "requestBody": {
-          "description": "",
+          "description": "Tutor credentials",
           "requery": true,
           "content": {
             "application/json": {
@@ -31,6 +31,77 @@
                 "$ref": "#/components/schemas/Auth"
               }
             }
+          }
+        },
+        "responses":{
+          "200": {
+            "description": "Successful authentication!"
+          },
+          "400": {
+            "description": "Invalid email or password"
+          },
+          "401": {
+            "description": "Invalid email or password"
+          },
+          "404": {
+            "description": "User not found!"
+          },
+          "422": {
+            "description": "Email and password is required!"
+          }
+        }
+      }
+    },
+    "/tutor": {
+      "post": {
+        "tags": ["Tutor"],
+        "sumary": "Create a new tutor",
+        "requestBody": {
+          "description": "Data for a new tutor",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Tutor"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tutor created successfully!"
+          },
+          "400": {
+            "description": "Request error"
+          }
+        }
+      }
+    },
+    "/tutors": {
+      "get": {
+        "tags": ["Tutor"],
+        "summary": "Retrieves all tutors.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listing All Tutors and Pets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Tutor"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
@@ -62,9 +133,48 @@
             "type": "string"
           }
         }
+      },
+      "Tutor": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "date_of_birth": {
+            "type": "string",
+            "format": "date"
+          },
+          "zip_code": {
+            "type": "string"
+          },
+          "pets": {
+            "type": "array"
+          }
+        },
+        "required": [
+          "name",
+          "password",
+          "phone",
+          "email",
+          "date_of_birth",
+          "zip_code",
+          "pets"
+          
+        ]
       }
     },
-    "securitySchemas":{
+    "securitySchemes":{
       "bearerAuth": {
         "type": "http",
         "scheme": "bearer",
