@@ -27,7 +27,7 @@ server.use(express.json());
 const PORT = process.env.PORT || 5001;
 
 new App().server.listen(PORT, () => {
-  console.log(`Server is running at the URL http://localhost:${PORT}`);
+  console.log(`Server is running at the URL http://localhost:${PORT}/api-docs`);
 });
 
 export { server };
