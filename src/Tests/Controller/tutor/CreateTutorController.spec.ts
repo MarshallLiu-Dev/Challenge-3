@@ -1,6 +1,6 @@
 import request from "supertest";
-import { server } from "../server";
-import { App } from "../app/app";
+import { server } from "../../../server";
+import { App } from "../../../app/app";
 
 describe('CreateTutorController', () => {
     let app: App;
