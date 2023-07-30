@@ -8,18 +8,68 @@
   "tags":[
     {
       "name": "Login",
-      "description": ""
+      "description": "Get the authentication token"
     },{
       "name": "Tutor",
-      "description": ""
+      "description": "features to handle tutor(s)"
     },{
       "name": "Pet",
-      "description": ""
+      "description": "features to handle pet(s)"
     }
   ],
-  "paths": {},
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": ["Login"],
+        "sumary": "Authenticate the given tutor.",
+        "requestBody": {
+          "description": "",
+          "requery": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Auth"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "components": {
-    "schemas":{},
-    "securitySchemas":{}
+    "schemas":{
+      "Auth": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ]
+      },
+      "AuthResponse": {
+        "type":"object",
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemas":{
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
   }
 }
