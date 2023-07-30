@@ -1,4 +1,3 @@
-import { describe, expect, it, jest,} from '@jest/globals'
 import pets from '../../Models/pets'
 import {PetController} from '../../Controller/PetController'
 import mongoose from "mongoose"

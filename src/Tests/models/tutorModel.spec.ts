@@ -1,4 +1,3 @@
-import { describe, expect, it, jest } from "@jest/globals";
 import tutors from "../../Models/tutors";
 import {TutorController} from "../../Controller/TutorController";
 
