@@ -219,14 +219,76 @@
         }
       }
     },
+
     "/pet": {
       "get": {
-        "tags": ["Pet"]
+        "tags": ["Pet"],
+        "summary": "Retrieves all pets.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Listing All Pets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type":"array",
+                  "items": {
+                    "$ref":"#/components/schemas/Pet"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request error"
+          }
+        }
       }
     },
     "/pet/{petId}": {
       "get": {
-        "tags": ["Pet"]
+        "tags": ["Pet"],
+        "summary": "Get specific pet",
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "requery": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pet data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref":"#/components/schemas/Pet"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request error"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        }
       }
     },
     "/pet/{tutorId}": {
@@ -426,6 +488,35 @@
           "zip_code",
           "pets"
           
+        ]
+      },
+      "Pet":{
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "species": {
+            "type": "string"
+          },
+          "carry": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number",
+            "format": "float"
+          },
+          "date_of_birth": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "required": [
+          "name",
+          "species",
+          "carry",
+          "weight",
+          "date_of_birth"
         ]
       }
     },
