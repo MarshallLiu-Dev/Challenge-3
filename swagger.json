@@ -218,6 +218,148 @@
           }
         }
       }
+    },
+    "/pet": {
+      "get": {
+        "tags": ["Pet"]
+      }
+    },
+    "/pet/{petId}": {
+      "get": {
+        "tags": ["Pet"]
+      }
+    },
+    "/pet/{tutorId}": {
+      "post": {
+        "tags": ["Pet"],
+        "summary": "Creates a pet and adds it to a tutor",
+        "parameters": [
+          {
+            "name": "tutorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Data for a new pet",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pet created and associated with tutor successfully"
+          },
+          "400": {
+            "description": "Request error"
+          },
+          "404": {
+            "description": "Tutor not found"
+          }
+        }
+      }
+    },
+    "/pet/{petId}tutor/{tutorId}": {
+      "put": {
+        "tags": ["Pet"],
+        "summary": "Updates a pet's info",
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tutorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "New data for the pet",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Pet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pet updated"
+          },
+          "400": {
+            "description": "Request error"
+          },
+          "404": {
+            "description": "Pet not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Pet"],
+        "summary": "Deletes a pet from a tutor",
+        "parameters": [
+          {
+            "name": "petId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tutorId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Pet deleted successfully"
+          },
+          "400": {
+            "description": "Request error"
+          },
+          "404": {
+            "description": "Tutor or Pet not found"
+          }
+        }
+      }
     }
   },
   "components": {
