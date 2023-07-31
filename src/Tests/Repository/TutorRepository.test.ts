@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
 import { TutorRepository } from '../../Repositories/TutorRepository';
 import Tutors from '../../Models/tutors';
 
@@ -21,7 +20,20 @@ describe('TutorRepository', () => {
     expect(Tutors.create).toHaveBeenCalledWith(tutorData);
     expect(createdTutor).toEqual(mockTutor);
   });
+  test("findAllTutor should return all pets", async () => {
+    // Configure the mock of Pet.find to return a simulated array of pets
+    const mockPets = [
+      { _id: "1", name: "Dog" },
+      { _id: "2", name: "Cat" },
+    ];
+    (Tutors.find as jest.Mock).mockResolvedValue(mockPets);
 
+    const tutorRepository = new TutorRepository();
+    const tutors = await tutorRepository.findAllTutors();
+
+    expect(Tutors.find).toHaveBeenCalledWith();
+    expect(tutors).toEqual(mockPets);
+  });
   
   test('updateTutor should update an existing tutor', async () => {
     // Configura o mock do Tutors.findByIdAndUpdate para retornar o objeto atualizado simulado

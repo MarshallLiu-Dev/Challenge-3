@@ -7,8 +7,7 @@ export class TutorRepository {
       // Chama o método create do modelo Tutors passando os dados recebidos
       return await Tutors.create(data);
     } catch (error) {
-      console.log(error);
-      setError(error);
+      throw error;
     }
   }
 
