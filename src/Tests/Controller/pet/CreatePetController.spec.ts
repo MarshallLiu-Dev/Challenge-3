@@ -73,7 +73,7 @@ describe('CreatePetController', () => {
             console.log("Pet created successfully:", response.body);
             return response.statusCode
         } catch (error) {
-            console.error("Error creating pet:", error);
+            console.log("Error creating pet:", error);
         }
     }, 15000
 

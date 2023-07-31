@@ -7,8 +7,8 @@ export class TutorRepository {
       // Chama o método create do modelo Tutors passando os dados recebidos
       return await Tutors.create(data);
     } catch (error) {
-      // Em caso de erro, lança o erro para ser tratado posteriormente
-      throw error;
+      console.log(error);
+      setError(error);
     }
   }
 
@@ -27,7 +27,7 @@ export class TutorRepository {
   async findAllTutors() {
     try {
       // Chama o método find do modelo Tutors para obter todos os Tutores cadastrados
-      return await Tutors.find().select('-password').populate('pets').exec();;
+      return await Tutors.find().select("-password").populate("pets").exec();
     } catch (error) {
       // Em caso de erro, lança o erro para ser tratado posteriormente
       throw error;
@@ -56,3 +56,7 @@ export class TutorRepository {
     }
   }
 }
+function setError(error: unknown) {
+  throw new Error("Function not implemented.");
+}
+

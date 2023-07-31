@@ -11,7 +11,7 @@ describe('TutorRepository', () => {
 
   test('createTutor should create a new tutor', async () => {
     // Configura o mock do Tutors.create para retornar um objeto simulado
-    const mockTutor = { _id: uuidv4(), name: 'John Doe' };
+    const mockTutor = { _id: 'existingId', name: 'John Doe' };
     (Tutors.create as jest.Mock).mockResolvedValue(mockTutor);
 
     const tutorRepository = new TutorRepository();
@@ -22,6 +22,7 @@ describe('TutorRepository', () => {
     expect(createdTutor).toEqual(mockTutor);
   });
 
+  
   test('updateTutor should update an existing tutor', async () => {
     // Configura o mock do Tutors.findByIdAndUpdate para retornar o objeto atualizado simulado
     const mockTutor = { _id: 'existingId', name: 'Updated John Doe' };
@@ -63,4 +64,3 @@ describe('TutorRepository', () => {
     expect(deletedTutor).toEqual(mockDeletedTutor);
   });
 });
-
