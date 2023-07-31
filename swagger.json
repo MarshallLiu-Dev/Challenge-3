@@ -102,6 +102,9 @@
           },
           "500": {
             "description": "Server error"
+          },
+          "401": {
+            "description": "Authentication invalid, unauthorized"
           }
         }
       }
@@ -141,6 +144,9 @@
           },
           "500": {
             "description": "Server error"
+          },
+          "401": {
+            "description": "Authentication invalid, unauthorized"
           }
         }
       },
@@ -168,7 +174,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Tutor"
+                "$ref": "#/components/schemas/PutTutor"
               }
             }
           }
@@ -245,6 +251,9 @@
           },
           "400": {
             "description": "Request error"
+          },
+          "401": {
+            "description": "Authentication invalid, unauthorized"
           }
         }
       }
@@ -284,6 +293,9 @@
           },
           "400": {
             "description": "Request error"
+          },
+          "401": {
+            "description": "Authentication invalid, unauthorized"
           },
           "404": {
             "description": "Pet not found"
@@ -328,13 +340,16 @@
           "400": {
             "description": "Request error"
           },
+          "401": {
+            "description": "Authentication invalid, unauthorized"
+          },
           "404": {
             "description": "Tutor not found"
           }
         }
       }
     },
-    "/pet/{petId}tutor/{tutorId}": {
+    "/pet/{petId}/tutor/{tutorId}": {
       "put": {
         "tags": ["Pet"],
         "summary": "Updates a pet's info",
@@ -367,7 +382,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Pet"
+                "$ref": "#/components/schemas/PutPet"
               }
             }
           }
@@ -378,6 +393,9 @@
           },
           "400": {
             "description": "Request error"
+          },
+          "401": {
+            "description": "Authentication invalid, unauthorized"
           },
           "404": {
             "description": "Pet not found"
@@ -417,6 +435,9 @@
           "400": {
             "description": "Request error"
           },
+          "401": {
+            "description": "Authentication invalid, unauthorized"
+          },
           "404": {
             "description": "Tutor or Pet not found"
           }
@@ -438,6 +459,10 @@
             "format": "password"
           }
         },
+        "example": {
+          "email": "adm@gmail.com",
+          "password": "adm12345"
+      },
         "required": [
           "email",
           "password"
@@ -479,6 +504,61 @@
             "type": "array"
           }
         },
+        "example": {
+          "name": "user",
+          "password": "12345678" ,
+          "phone": "40028922",
+          "email": "user@gmail.com",
+          "date_of_birth": "2023-12-12 10: 10" ,
+          "zip_code": "12345678" 
+      },  
+        "required": [
+          "name",
+          "password",
+          "phone",
+          "email",
+          "date_of_birth",
+          "zip_code",
+          "pets"
+          
+        ]
+      },
+      "PutTutor": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string",
+            "format": "password"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "date_of_birth": {
+            "type": "string",
+            "format": "date"
+          },
+          "zip_code": {
+            "type": "string"
+          },
+          "pets": {
+            "type": "array"
+          }
+        },
+        "example": {
+          "name": "User01",
+          "password": "12345678" ,
+          "phone": "40028922",
+          "email": "User01@gmail.com",
+          "date_of_birth": "2023-12-12 10: 10" ,
+          "zip_code": "12345678" 
+      },  
         "required": [
           "name",
           "password",
@@ -511,6 +591,49 @@
             "format": "date"
           }
         },
+        "example": {
+          "name": "Pet01",
+          "species": "dog",
+          "carry": "p",
+          "weight": 5,
+          "date_of_birth": "1993-12-12 10:10"
+        },  
+        "required": [
+          "name",
+          "species",
+          "carry",
+          "weight",
+          "date_of_birth"
+        ]
+      },
+      "PutPet":{
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "species": {
+            "type": "string"
+          },
+          "carry": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number",
+            "format": "float"
+          },
+          "date_of_birth": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        "example": {
+          "name": "Floquinho",
+          "species": "dog",
+          "carry": "p",
+          "weight": 5,
+          "date_of_birth": "1993-12-12 10:10"
+        },  
         "required": [
           "name",
           "species",
