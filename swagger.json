@@ -186,6 +186,9 @@
           "400": {
             "description": "Request error"
           },
+          "401": {
+            "description": "Authentication invalid, unauthorized"
+          },
           "404": {
             "description": "Tutor not found"
           }
@@ -215,6 +218,9 @@
           },
           "400": {
             "description": "Request error"
+          },
+          "401": {
+            "description": "Authentication invalid, unauthorized"
           },
           "403": {
             "description": "Tutor has pets associated"
