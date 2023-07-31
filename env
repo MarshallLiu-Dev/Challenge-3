@@ -1,0 +1,3 @@
+MONGO_URL:'' É a URL de conexão para o MongoDB, contendo informações de autenticação e opções de conexão.
+JWT_SECRET:'' É a chave secreta usada para assinar e verificar os tokens JWT, garantindo sua autenticidade.
+JWT_EXPIRATION: '' Define o tempo de expiração padrão dos tokens JWT emitidos pela aplicação.
