@@ -10,11 +10,25 @@ describe("PetRepository", () => {
 
   test("createPet should create a new pet", async () => {
     // Configure the mock of Pet.create to return a simulated object
-    const mockPet = { _id: "existingId", name: "Dog" };
+    const mockPet = {
+      _id: "existingId",
+      name: "Dog",
+      species: "Canis lupus familiaris",
+      carry: "y",
+      weight: "10",
+      date_of_birth: "10/10/2000",
+    };
     (Pet.create as jest.Mock).mockResolvedValue(mockPet);
 
     const petRepository = new PetRepository();
-    const petData = { name: "Dog", species: "Canis familiaris" };
+    const petData = {
+      _id: "existingId",
+      name: "Dog",
+      species: "Canis lupus familiaris",
+      carry: "y",
+      weight: "10",
+      date_of_birth: "10/10/2000",
+    };
     const createdPet = await petRepository.createPet(petData);
 
     expect(Pet.create).toHaveBeenCalledWith(petData);
@@ -24,8 +38,14 @@ describe("PetRepository", () => {
   test("findAllPets should return all pets", async () => {
     // Configure the mock of Pet.find to return a simulated array of pets
     const mockPets = [
-      { _id: "1", name: "Dog" },
-      { _id: "2", name: "Cat" },
+      {
+        _id: "existingId",
+        name: "Dog",
+        species: "Canis lupus familiaris",
+        carry: "y",
+        weight: "10",
+        date_of_birth: "10/10/2000",
+      },
     ];
     (Pet.find as jest.Mock).mockResolvedValue(mockPets);
 
@@ -52,7 +72,14 @@ describe("PetRepository", () => {
 
   test("findPetById should get a pet by ID from the database", async () => {
     // Configure the mock of Pet.findById to return a simulated object
-    const mockPet = { _id: "existingId", name: "Dog" };
+    const mockPet = {
+      _id: "existingId",
+      name: "Dog",
+      species: "Canis lupus familiaris",
+      carry: "y",
+      weight: "10",
+      date_of_birth: "10/10/2000",
+    };
     (Pet.findById as jest.Mock).mockResolvedValue(mockPet);
 
     const petRepository = new PetRepository();
