@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Thiago\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @global/jest
+  C:\Program Files\nodejs\node.exe C:\Users\Thiago\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @type/jest
 
 PATH: 
   C:\Users\Thiago\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Thiago\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Windows\System32\OpenSSH;C:\Program Files\nodejs;C:\Program Files\Git\cmd;C:\Program Files\Notepad++;C:\Users\Thiago\AppData\Local\Programs\Microsoft VS Code;C:\Program Files\Perforce;C:\Users\USUARIO\AppData\Roaming\npm;%AppData%\np;.;C:\Program Files\MongoDB\Server\6.0\bin\mongod.exe;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Program Files\MySQL\MySQL Shell 8.0\bin;C:\Users\Thiago\AppData\Local\Microsoft\WindowsApps;C:\Users\Thiago\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Thiago\AppData\Roaming\npm;C:\Program Files\MongoDB\Server\6.0\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Users\Thiago\AppData\Local\GitHubDesktop\bin;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -14,7 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@global%2fjest: Not found
+  Error: https://registry.yarnpkg.com/@type%2fjest: Not found
       at params.callback [as _callback] (C:\Users\Thiago\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66145:18)
       at self.callback (C:\Users\Thiago\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:140890:22)
       at Request.emit (node:events:513:28)
@@ -1249,7 +1249,7 @@ Lockfile:
   
   "@types/jest@^29.5.3":
     version "29.5.3"
-    resolved "https://registry.npmjs.org/@types/jest/-/jest-29.5.3.tgz"
+    resolved "https://registry.yarnpkg.com/@types/jest/-/jest-29.5.3.tgz#7a35dc0044ffb8b56325c6802a4781a626b05777"
     integrity sha512-1Nq7YrO/vJE/FYnqYyw0FS8LdrjExSgIiHyKg7xPpn+yi8Q4huZryKnkJatN1ZRH89Kw2v33/8ZMB7DuZeSLlA==
     dependencies:
       expect "^29.0.0"
